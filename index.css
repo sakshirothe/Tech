@@ -1,0 +1,159 @@
+:root {
+  --black: #09080f;
+  --deep-red: #a0041e;
+  --purple: #2a093c;
+  --neon-pink: #e9436f;
+  --neon-blue: #49fff3;
+  --neon-green: #74ff5f;
+  --cta-glow: #ff0066;
+  --white: #fafaff;
+}
+
+body {
+  background: linear-gradient(135deg, var(--black) 70%, var(--purple) 100%);
+  color: var(--white);
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--neon-pink);
+  text-shadow:
+    0 0 8px var(--neon-pink),
+    0 0 32px var(--neon-pink),
+    2px 2px 8px var(--deep-red);
+  animation: flicker 2.4s infinite steps(1,end), glitchText 2.7s infinite linear;
+  user-select: none;
+}
+
+/* Flicker + Glitch Animation */
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity:1; }
+  20%, 24%, 55% { opacity:0.5; }
+  23% { opacity:0.8; }
+  56% { opacity:0.7; }
+}
+@keyframes glitchText {
+  0% { text-shadow: 2px 0 var(--deep-red), -2px 2px var(--neon-blue), 0 0 10px var(--neon-pink);}
+  20% { text-shadow: -2px -2px var(--neon-green), 2px 2px var(--purple);}
+  40% { text-shadow: 2px 2px var(--deep-red);}
+  60% { text-shadow: -1px 2px var(--neon-blue);}
+  100% { text-shadow: 2px 0 var(--neon-pink);}
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1.15rem;
+  max-width: 400px;
+  margin: 0 auto 2rem;
+  color: #e8e3ea;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #2d0b2a99;
+  opacity: 0.93;
+}
+
+/* Glowing CTA Button */
+.cta-btn {
+  background: var(--black);
+  color: var(--white);
+  padding: 1rem 2.5rem;
+  border: 2px solid var(--neon-pink);
+  border-radius: 30px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 24px 2px #e9436f40;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  outline: none;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px var(--neon-pink);
+}
+.cta-btn:hover, .cta-btn:focus {
+  background: var(--neon-pink);
+  color: var(--black);
+  border: 2px solid var(--cta-glow);
+  box-shadow: 0 0 32px 8px var(--cta-glow);
+  text-shadow: 0 0 16px var(--cta-glow);
+}
+
+/* Floating shapes (Squid Game) */
+.shape {
+  position: absolute;
+  opacity: 0.24;
+  filter: blur(0.5px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatShape 13s linear infinite alternate;
+}
+.shape.triangle {
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-bottom: 48px solid var(--neon-pink);
+  width: 0;
+  height: 0;
+}
+.shape.circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 6px solid var(--neon-blue); background: transparent;
+}
+.shape.square {
+  width: 60px; height: 60px; border: 6px solid var(--neon-green);
+  border-radius: 8px; background: transparent;
+}
+.shape1 { left: 12vw; top: 12vh; animation-delay: 0s;}
+.shape2 { left: 80vw; top: 25vh; animation-delay: 3s;}
+.shape3 { left: 40vw; top: 68vh; animation-delay: 7s;}
+@keyframes floatShape {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(-60px) scale(1.2);}
+}
+
+/* Blinking fairy lights (Stranger Things) */
+.lights {
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  display: flex; justify-content: center; gap: 1.7vw; margin-top: 16px;
+  pointer-events: none; z-index: 0;
+}
+.light {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px 2px var(--neon-blue);
+  opacity: 0.6;
+  animation: blinkLight 3s infinite alternate;
+}
+.light:nth-child(2n) { background: var(--neon-pink); box-shadow: 0 0 10px 2px var(--neon-pink);}
+.light:nth-child(3n) { background: var(--neon-green); box-shadow: 0 0 10px 2px var(--neon-green);}
+.light:nth-child(4n) { background: var(--purple); box-shadow: 0 0 10px 2px var(--purple);}
+.light:nth-child(odd) { animation-delay: 1.2s;}
+.light:nth-child(even) { animation-delay: 0.6s;}
+@keyframes blinkLight {
+  0%, 100% { opacity: 0.5; }
+  30% { opacity: 0.9; }
+  60% { opacity: 0.2; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .title { font-size: 1.5rem; }
+  .subtitle { font-size: 1rem;}
+  .shape.triangle, .shape.circle, .shape.square { transform: scale(0.7);}
+}
