@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>TechFest: Squid x Upside Down</title>
+  <style>
+    :root {
+      --bg-dark: #18192b;
+      --bg-accent: #d90429;
+      --text-main: #fff;
+      --text-glitch1: #0ff;
+      --text-glitch2: #f0f;
+      --cta-bg: #d90429;
+      --cta-hover: #22223b;
+    }
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      overflow: hidden;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .bg-anim {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+      color: var(--text-main);
+      /* Glitch effect */
+      animation: glitch 2s infinite linear alternate-reverse;
+    }
+    .title::before, .title::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0; width: 100%; overflow: hidden;
+      color: var(--text-glitch1);
+      z-index: -1;
+      clip-path: inset(0 0 60% 0);
+      animation: glitchTop 2s infinite linear alternate-reverse;
+    }
+    .title::after {
+      color: var(--text-glitch2);
+      clip-path: inset(60% 0 0 0);
+      animation: glitchBottom 2s infinite linear alternate-reverse;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 var(--bg-accent), -2px 2px var(--text-glitch1);}
+      20% { text-shadow: -2px -2px var(--text-glitch2);}
+      40% { text-shadow: 2px 2px var(--bg-accent);}
+      60% { text-shadow: -1px 2px var(--text-glitch1);}
+      100% { text-shadow: 2px 0 var(--bg-accent);}
+    }
+    @keyframes glitchTop {
+      0% { transform: translate(0,0);}
+      20% { transform: translate(-2px, -2px);}
+      40% { transform: translate(-4px, 2px);}
+      60% { transform: translate(2px, 2px);}
+      100% { transform: translate(0,0);}
+    }
+    @keyframes glitchBottom {
+      0% { transform: translate(0,0);}
+      20% { transform: translate(2px, 2px);}
+      40% { transform: translate(4px, -2px);}
+      60% { transform: translate(-2px, -2px);}
+      100% { transform: translate(0,0);}
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      max-width: 400px;
+      margin: 0 auto 2rem;
+      color: #aaa;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 3px #0003;
+    }
+    .cta-btn {
+      background: var(--cta-bg);
+      color: #fff;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 24px 0 #d9042940;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      background: var(--cta-hover);
+      color: var(--bg-accent);
+      box-shadow: 0 2px 12px 0 #d9042970;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .title {
+        font-size: 1.6rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-anim" aria-hidden="true" id="bgAnim">
+    <!-- Placeholder for animated background (floating numbers/glitching text) -->
+  </div>
+  <main class="hero" role="main">
+    <h1 class="title" data-text="TechFest: Into The Game">TechFest: Into The Game</h1>
+    <p class="subtitle">
+      Enter a world where Squid Game meets the Upside Down.<br>
+      Face the challenges. Break the code. Flip reality.<br>
+      Will you survive the TechFest?
+    </p>
+    <button class="cta-btn">Get Your Pass</button>
+  </main>
+  <script>
+    // Simple placeholder: floating numbers with glitch effect (customize/replace as needed)
+    const bgAnim = document.getElementById('bgAnim');
+    for (let i = 0; i < 24; i++) {
+      const el = document.createElement('span');
+      el.textContent = Math.floor(Math.random() * 100);
+      el.style.position = 'absolute';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = Math.random() * 100 + 'vh';
+      el.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+      el.style.opacity = Math.random() * 0.3 + 0.2;
+      el.style.color = (Math.random() > 0.5) ? '#0ff' : '#d90429';
+      el.style.fontFamily = 'monospace';
+      el.style.animation = `floatNum${i} ${(Math.random()*3+2).toFixed(1)}s ease-in-out infinite alternate`;
+      bgAnim.appendChild(el);
+
+      const keyframes = `
+        @keyframes floatNum${i} {
+          0% { transform: translateY(0) scale(1);}
+          100% { transform: translateY(${Math.random() * 20 - 10}vh) scale(${Math.random() * 0.5 + 0.75});}
+        }
+      `;
+      const styleSheet = document.createElement("style");
+      styleSheet.innerText = keyframes;
+      document.head.appendChild(styleSheet);
+    }
+  </script>
+</body>
+</html>
